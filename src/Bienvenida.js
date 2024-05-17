@@ -10,7 +10,7 @@ const Bienvenida = (props) => {
             name="programa"
             value="UG"
             defaultChecked
-            onClick={() => props.setPrograma("UG")}
+            onClick={() => props.setProgram("UG")}
           />
           <label> Universitario</label>
         </li>
@@ -19,7 +19,7 @@ const Bienvenida = (props) => {
             type="radio"
             name="programa"
             value="PG"
-            onClick={() => props.setPrograma("PG")}
+            onClick={() => props.setProgram("PG")}
           ></input>
           <label> Graduado</label>
         </li>
