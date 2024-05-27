@@ -8,9 +8,18 @@ const EnrolmentForm = (props) => {
   const [btnValue, setBtnValue] = useState("Enrol");
   const [studentID, setStudentID] = useState(0);
 
+  const handleSubmit = (event) => {
+    firstName !== "" || lastName !== ""
+      ? setWelcomeMessage(`hola ${firstName} ${lastName}`)
+      : setWelcomeMessage("");
+    event.preventDefault();
+  };
+
   const handleClick = (event) => {
+    // la siguiente funcion resetea los valores con setState,
+    // PERO LOS VALORES NO SON CAMBIADOS HASTA EL CIGUIENT SIKLO DE RENDERIZADO
+    // (porque los hooks de react son ASINCRONICOS)
     handleInputReset("", "", "");
-    props.setSeats(props.currentSeats - 1);
     // Student ID generation
     const randomKey = Math.floor(1000 + Math.random() * 9000);
     let id = randomKey;
@@ -36,8 +45,14 @@ const EnrolmentForm = (props) => {
         />
       ),
     });
+    props.setSeats(props.currentSeats - 1);
     setBtnValue("Enrol");
-    setWelcomeMessage(`benvenuto ${firstName} ${lastName}`);
+    event.preventDefault();
+  };
+
+  const handleClickCancel = (event) => {
+    handleInputReset("", "", "");
+    setBtnValue("Enrol");
     event.preventDefault();
   };
 
@@ -46,17 +61,11 @@ const EnrolmentForm = (props) => {
     setInput(event.target.value);
   };
 
-  const handleEdit = (stId, program) => {
+  const handleEdit = (stId) => {
     handleInputReset(firstName, lastName, email);
     setStudentID(stId);
     setBtnValue("Update");
-    props.setSelectedProgram(program);
-  };
-
-  const handleClickCancel = (event) => {
-    handleInputReset("", "", "");
-    setBtnValue("Enrol");
-    event.preventDefault();
+    props.handleItemSelection("edit", stId);
   };
 
   //set input fields
@@ -69,7 +78,7 @@ const EnrolmentForm = (props) => {
   return (
     <div>
       <div className="enrolContainer">
-        <form className="enrolForm" name="enrolForm">
+        <form className="enrolForm" name="enrolForm" onSubmit={handleSubmit}>
           <ul className="ulEnrol">
             <li>
               <label for="firstname"></label>

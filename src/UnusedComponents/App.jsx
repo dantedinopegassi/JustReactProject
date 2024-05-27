@@ -1,6 +1,9 @@
-import EnrolmentForm from "./EnrolamientoFormulario";
-import EnrolList from "./ListaEnlistados";
+import EnrolList from "./EnrolList";
+import EnrolmentForm from "./EnrolForm";
 import { useState } from "react";
+
+//ESTO AUN NO ANDA A FULL, ANDA POR LA LINEA 153
+
 const App = () => {
   const [program, setProgram] = useState("UG");
   const [ugSeats, setUgSeats] = useState(60);
@@ -25,6 +28,13 @@ const App = () => {
     setAction(action);
     setSelItemId(id);
   };
+
+  const setSelectedProgram = (selProgram) => {
+    selProgram === "UG" ? setIsUgChecked(true) : setIsUgChecked(false);
+    setProgram(selProgram);
+    setIsRestoreSeats(true);
+  };
+
   const restoreSeats = (pgm) => {
     pgm === "UG" ? setUgSeats(ugSeats + 1) : setPgSeats(pgSeats + 1);
     setAction("");
@@ -35,11 +45,6 @@ const App = () => {
     } else {
       setPgSeats(updatedSeats);
     }
-  };
-  const setSelectedProgram = (selProgram) => {
-    selProgram === "UG" ? setIsUgChecked(true) : setIsUgChecked(false);
-    setProgram(selProgram);
-    setIsRestoreSeats(true);
   };
   return (
     <div className="App">
